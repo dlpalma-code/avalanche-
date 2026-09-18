@@ -208,8 +208,7 @@ def build_data_summary(df: pd.DataFrame) -> str:
 
 # Hugging Face model used for the optional free-form question fallback.
 # Any instruction-tuned chat model on the Hugging Face Inference API works here.
-HF_MODEL = "Qwen/Qwen2.5-7B-Instruct"
-
+HF_MODEL = "Qwen/Qwen2.5-7B-Instruct-1M"
 
 
 def get_api_key():
@@ -246,7 +245,10 @@ def ask_llm(question: str, df: pd.DataFrame):
     try:
         from huggingface_hub import InferenceClient
 
-        client = InferenceClient(api_key=api_key)
+        client = InferenceClient(
+    api_key=api_key,
+    provider="hf-inference"
+)
 
         data_summary = build_data_summary(df)
 
